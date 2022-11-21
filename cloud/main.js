@@ -2,6 +2,7 @@ require('./functions/onboardingGet');
 require('./functions/onboardingSetupSave');
 require('./functions/onboardingV2SetupSave');
 require('./functions/serviceSave');
+require('./functions/serviceUpdate');
 require('./functions/serviceDelete');
 require('./functions/serviceGetAll');
 require('./functions/serviceDelete');
@@ -55,3 +56,5 @@ require('./functions/location_scheduleGet');
 require('./functions/location_schedule');
 require('./functions/test');
 require('./functions/categoryUpdate')
+require('./functions/serviceDisable')
+require('./functions/serviceEnable')

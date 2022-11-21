@@ -10,8 +10,8 @@ var ParseDashboard = require ('parse-dashboard');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var Parse = require ('parse/node');
-
 const Appointment = require('./class/appointment');
+const test = require('./functions/test');
 /******************************************************* 
  * 
  * Clés de configutaion
@@ -59,16 +59,54 @@ const dashboardConfig = {
  var dashboard = new ParseDashboard(dashboardConfig);
  Parse.initialize("iuzefefdhoezfubdi",'erki-jsKey',"zeiuyfguzygferyfzyu");
  Parse.serverURL = 'http://localhost:3000/api';
- //const Appointment = Parse.Object.extend("Appointment");
-//  const appointment = new Appointment()
-//  appointment.set("name","RDV");
-//  appointment.save().then((e)=>{console.log("Save complete : " + e)})
-const query = new Parse.Query("Appointment");
-const req = async () => {
-  return await query.find();
+
+
+
+//dropClass("Service");
+
+console.clear();
+async function getServiceList (){
+  const query = new Parse.Query("Service");
+  const res = await query.find()
+  const serviceList = res
+  .map(async (s)=>{
+    let returnValue = s
+    const category = returnValue.attributes.category;
+    let categoryName = null;
+ 
+    try {
+    let categoryId = category.id;
+      const query2 = new Parse.Query('Category');
+      await query2.get(categoryId)
+      .then((cat) => {
+        categoryName = cat.get('name');
+      })
+    }
+   catch{
+    
+   }   
+    returnValue = {...returnValue,categoryName : categoryName}
+    console.log(returnValue)
+  })
 }
-const res = req().then((e)=>console.log(e))
-//query.find ().then((e)=>console.log(e))
+/*
+const x = async () => await Parse.Cloud.run('serviceGetAll',{});
+console.log("######################################")
+x().then((s)=>{
+  for(i of s)
+  {try {
+    console.log(i.attributes.category.attributes)
+  } catch (error) {
+    
+  }}})
+*/
+test();
+const q = new Parse.Query("Service");
+q.first().then((s)=>{
+  const category = s.attributes.category;
+  new Parse.Query('Category').get(category?.id).catch(console.log)
+  //.then(cat => console.log(cat.get('name')))
+})
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

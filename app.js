@@ -10,7 +10,6 @@ var ParseDashboard = require ('parse-dashboard');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var Parse = require ('parse/node');
-const Appointment = require('./class/appointment');
 const test = require('./functions/test');
 /******************************************************* 
  * 

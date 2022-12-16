@@ -1,4 +1,4 @@
-Parse.Cloud.define("scheduleBreakDelete",async (req) => {
+Parse.Cloud.define("scheduleBreakEnable",async (req) => {
     const company = req.params.company;
     if (!company) {
         throw("missing company name")
@@ -11,7 +11,7 @@ Parse.Cloud.define("scheduleBreakDelete",async (req) => {
     const lQuery = new Parse.Query(lclassName);
     const bk = new Parse.Object(bclassName);
     bk.id = bId;
-    const key = 'breakTime.'+day+'.active';
+    const key = 'breakTime.'+day+'.disable';
     bk.set(key,false);
     await bk.save();
     lQuery.include('breaks');

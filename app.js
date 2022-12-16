@@ -65,30 +65,7 @@ const dashboardConfig = {
 //dropClass("Service");
 
 console.clear();
-async function getServiceList (){
-  const query = new Parse.Query("Service");
-  const res = await query.find()
-  const serviceList = res
-  .map(async (s)=>{
-    let returnValue = s
-    const category = returnValue.attributes.category;
-    let categoryName = null;
- 
-    try {
-    let categoryId = category.id;
-      const query2 = new Parse.Query('Category');
-      await query2.get(categoryId)
-      .then((cat) => {
-        categoryName = cat.get('name');
-      })
-    }
-   catch{
-    
-   }   
-    returnValue = {...returnValue,categoryName : categoryName}
-    console.log(returnValue)
-  })
-}
+
 /*
 const x = async () => await Parse.Cloud.run('serviceGetAll',{});
 console.log("######################################")
@@ -101,12 +78,6 @@ x().then((s)=>{
   }}})
 */
 test();
-const q = new Parse.Query("Service");
-q.first().then((s)=>{
-  const category = s.attributes.category;
-  new Parse.Query('Category').get(category?.id).catch(console.log)
-  //.then(cat => console.log(cat.get('name')))
-})
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
